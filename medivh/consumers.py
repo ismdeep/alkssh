@@ -2,6 +2,7 @@ from channels.generic.websocket import WebsocketConsumer
 from medivh.kube import KubeApi
 from threading import Thread
 
+
 class K8SStreamThread(Thread):
     def __init__(self, websocket, container_stream):
         Thread.__init__(self)
@@ -27,7 +28,7 @@ class SSHConsumer(WebsocketConsumer):
         self.namespace_pod = path.split('/')[-2]
         self.cols_s = path.split('/')[-3]
         self.rows_s = path.split('/')[-4]
-        self.stream = KubeApi().pod_exec(self.name,self.namespace_pod,self.rows_s,self.cols_s)
+        self.stream = KubeApi().pod_exec(self.name, self.namespace_pod, self.rows_s, self.cols_s)
         kub_stream = K8SStreamThread(self, self.stream)
         kub_stream.start()
         self.accept()

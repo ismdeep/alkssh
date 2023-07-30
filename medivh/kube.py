@@ -2,10 +2,12 @@ from kubernetes import client, config
 from kubernetes.stream import stream
 import json
 
+
 class KubeApi:
-    def __init__(self,):
+    def __init__(self, ):
         config.load_kube_config("/root/kubernetes.yaml")
-    def pod_exec(self,pod,namespace_pod,row,cols,container=""):
+
+    def pod_exec(self, pod, namespace_pod, row, cols, container=""):
         api_instance = client.CoreV1Api()
         exec_command = [
             "/bin/sh",
@@ -27,4 +29,3 @@ class KubeApi:
                              )
         cont_stream.write_channel(4, json.dumps({"Height": int(row), "Width": int(cols)}))
         return cont_stream
-
